@@ -1,0 +1,15 @@
+{
+  "name": "multimedia-player-electron",
+  "version": "1.0.0",
+  "description": "A multimedia player desktop application made with electron",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^36.2.0"
+  }
+}

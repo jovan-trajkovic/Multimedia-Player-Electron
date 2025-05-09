@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multimedia Player</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <menu>
+    <details>
+      <summary>File</summary>
+      <div>
+        <button onclick="window.close()">Exit</button>
+      </div>
+    </details>
+    <details>
+      <summary>List</summary>
+      <div>
+        <button onclick="addStaticVideo()">Add Static</button>
+        <button onclick="editStaticVideo()">Edit Static</button>
+        <button onclick="addVideo()">Add</button>
+        <button onclick="editVideo()">Edit</button>
+        <button onclick="deleteVideo()">Delete</button>
+      </div>
+    </details>
+  </menu>
+
+  <div class="main">
+    <div class="playlist">
+      <!-- Example playlist item -->
+      <div class="playlist-item" onclick="selectVideo('video.mp4')">
+        <img src="thumbnail.jpg" alt="Thumbnail">
+        <div>
+          <div><strong>Video Name</strong></div>
+          <div><em>Author</em></div>
+          <div>120 seconds</div>
+          <div>04.05.2024</div>
+          <div>14:20:00</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-container">
+      <video id="videoPlayer" controls></video>
+    </div>
+
+    <div class="progress">
+      <span id="currentTime">--:--</span>
+      <input type="range" id="progressBar" min="0" max="100" value="0">
+    </div>
+
+    <div class="video-info" id="videoName">
+      Selected Video Name
+    </div>
+
+    <div class="controls">
+      <button onclick="rewind()">⏮</button>
+      <button onclick="togglePlay()">⏯</button>
+      <button onclick="skip()">⏭</button>
+      <button onclick="toggleLoop()">🔁</button>
+      <button onclick="shuffle()">🔀</button>
+    </div>
+  </div>
+
+  <script>
+    const video = document.getElementById("videoPlayer");
+    const progressBar = document.getElementById("progressBar");
+    const currentTimeLabel = document.getElementById("currentTime");
+
+    function selectVideo(source) {
+      video.src = source;
+      video.play();
+    }
+
+    function togglePlay() {
+      if (video.paused) video.play();
+      else video.pause();
+    }
+
+    function rewind() {
+      video.currentTime -= 10;
+    }
+
+    function skip() {
+      video.currentTime += 10;
+    }
+
+    function toggleLoop() {
+      video.loop = !video.loop;
+      alert("Loop: " + (video.loop ? "On" : "Off"));
+    }
+
+    function shuffle() {
+      alert("Shuffle not implemented yet.");
+    }
+  </script>
+
+</body>
+</html>

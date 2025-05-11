@@ -6,39 +6,8 @@
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-
-  <menu>
-    <details>
-      <summary>File</summary>
-      <div>
-        <button onclick="window.close()">Exit</button>
-      </div>
-    </details>
-    <details>
-      <summary>List</summary>
-      <div>
-        <button onclick="addStaticVideo()">Add Static</button>
-        <button onclick="editStaticVideo()">Edit Static</button>
-        <button onclick="addVideo()">Add</button>
-        <button onclick="editVideo()">Edit</button>
-        <button onclick="deleteVideo()">Delete</button>
-      </div>
-    </details>
-  </menu>
-
   <div class="main">
-    <div class="playlist">
-      <!-- Example playlist item -->
-      <div class="playlist-item" onclick="selectVideo('video.mp4')">
-        <img src="thumbnail.jpg" alt="Thumbnail">
-        <div>
-          <div><strong>Video Name</strong></div>
-          <div><em>Author</em></div>
-          <div>120 seconds</div>
-          <div>04.05.2024</div>
-          <div>14:20:00</div>
-        </div>
-      </div>
+    <div class="playlist" id="playlist">
     </div>
 
     <div class="video-container">
@@ -54,18 +23,22 @@
       Selected Video Name
     </div>
 
-    <div class="controls">
-      <button onclick="rewind()">⏮</button>
-      <button onclick="togglePlay()">⏯</button>
-      <button onclick="skip()">⏭</button>
-      <button onclick="toggleLoop()">🔁</button>
-      <button onclick="shuffle()">🔀</button>
+    <div class="control-bar">
+      <div class="spacer"></div>
+      <div class="controls">
+        <button onclick="rewind()">⏮</button>
+        <button onclick="togglePlay()">⏯</button>
+        <button onclick="skip()">⏭</button>
+      </div>
+      <div class="end-controls">
+        <button onclick="toggleLoop()">🔁</button>
+        <button onclick="shuffle()">🔀</button>
+      </div>
     </div>
   </div>
 
   <script>
     const video = document.getElementById("videoPlayer");
-    const progressBar = document.getElementById("progressBar");
     const currentTimeLabel = document.getElementById("currentTime");
 
     function selectVideo(source) {
@@ -95,6 +68,6 @@
       alert("Shuffle not implemented yet.");
     }
   </script>
-
+  <script src="renderer.js"></script>
 </body>
 </html>

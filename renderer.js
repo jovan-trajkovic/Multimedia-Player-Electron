@@ -2,6 +2,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const videos = window.videoAPI.getVideos();
   const playlist = document.getElementById("playlist");
   const videoPlayer = document.getElementById("videoPlayer");
+  const videoName = document.getElementById("videoName");
 
   console.log(videos?? 'empty')
 
@@ -21,8 +22,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
     item.onclick = () => {
       videoPlayer.src = video.file;
+      videoName.textContent = video.name;
       videoPlayer.play();
     };
     playlist.appendChild(item);
   });
+});
+
+window.windowAPI.onThemeChanged((theme) => {
+  const link = document.getElementById("theme");
+  if (link) {
+    link.href = theme === "dark" ? "dark.css" : "light.css";
+  }
 });

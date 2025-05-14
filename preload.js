@@ -22,5 +22,15 @@ contextBridge.exposeInMainWorld("videoAPI", {
 });
 
 contextBridge.exposeInMainWorld("windowAPI", {
-    OpenNewWindow: () => {ipcRenderer.send('OnOpenNewWindow')}
-})
+  setTheme: (theme) => {ipcRenderer.send("set-theme", theme)},
+  onThemeChanged: (callback) =>
+    ipcRenderer.on("theme-updated", (event, theme) => callback(theme)),
+});
+
+
+const themeArg = process.argv.find((arg) => arg.startsWith("--theme="));
+const currentTheme = themeArg ? themeArg.split("=")[1] : "light";
+
+contextBridge.exposeInMainWorld("initialTheme", {
+  value: currentTheme,
+});

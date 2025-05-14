@@ -1,13 +1,13 @@
-const { app, BrowserWindow, Menu } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const path = require("path");
+
+let isDarkTheme = false;
 
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      contextIsolation: true,
-      nodeIntegration: false,
       preload: path.join(__dirname, "preload.js"),
     },
   });
@@ -55,6 +55,7 @@ function createWindow() {
         {
           label: "App Settings",
           click: () => {
+            createSettingsWindow();
           },
         },
       ]
@@ -72,3 +73,39 @@ app.whenReady().then(() => {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit(); // Don't quit for Mac OS
 });
+
+ipcMain.on("set-theme", (event, theme) => {
+  if(theme === "dark")
+    isDarkTheme = true;
+  else
+    isDarkTheme = false;
+
+  BrowserWindow.getAllWindows().forEach((win) => {
+    win.webContents.send("theme-updated", theme);
+  });
+});
+
+let settingsWindow = null;
+
+function createSettingsWindow() {
+  if (settingsWindow) {
+    settingsWindow.focus();
+    return;
+  }
+
+  settingsWindow = new BrowserWindow({
+    width: 300,
+    height: 200,
+    resizable: false,
+    webPreferences: {
+      preload: path.join(__dirname, "preload.js"),
+      additionalArguments: [`--theme=${isDarkTheme ? "dark" : "light"}`],
+    },
+  });
+
+  settingsWindow.loadFile("settings.html");
+
+  settingsWindow.on("closed", () => {
+    settingsWindow = null;
+  });
+}
